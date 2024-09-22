@@ -6,6 +6,8 @@ import {
   getChainIdFromMessage,
   getAddressFromMessage,
 } from "@reown/appkit-siwe";
+import { SupabaseAdapter } from "@auth/supabase-adapter";
+import jwt from "jsonwebtoken";
 
 declare module "next-auth" {
   interface Session extends SIWESession {
@@ -79,6 +81,10 @@ const handler = NextAuth({
   },
   callbacks: {
     session({ session, token }) {
+      const signingSecret = process.env.SUPABASE_JWT_SECRET;
+      console.log("- signingSecret", signingSecret);
+      console.log("- session", session);
+      console.log("- token", token);
       if (!token.sub) {
         return session;
       }
@@ -88,10 +94,24 @@ const handler = NextAuth({
         session.address = address;
         session.chainId = parseInt(chainId, 10);
       }
+      const payload = {
+        aud: "authenticated",
+        exp: Math.floor(new Date(session.expires).getTime() / 1000),
+        sub: token.sub,
+        address: address,
+        role: "authenticated",
+      };
+      session.supabaseAccessToken = jwt.sign(payload, signingSecret);
+
+      console.log("session", session);
 
       return session;
     },
   },
+  adapter: SupabaseAdapter({
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+    secret: process.env.SUPABASE_KEY || "",
+  }),
 });
 
 export { handler as GET, handler as POST };

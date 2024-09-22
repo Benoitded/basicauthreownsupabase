@@ -52,10 +52,10 @@ const Header: React.FC = () => {
           Home
         </Link>
         <Link
-          href={"/products"}
-          className={router.pathname === "/products" ? styles.active : ""}
+          href={"/profile"}
+          className={router.pathname === "/profile" ? styles.active : ""}
         >
-          Products
+          Profile
         </Link>
         <Link
           href={"/pricing"}
