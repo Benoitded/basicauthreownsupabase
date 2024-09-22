@@ -1,0 +1,115 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0px;
+  z-index: 200;
+  width: 100%;
+  .logo,
+  .connect {
+    width: 200px;
+    min-width: 200px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .logo {
+    position: relative;
+    justify-content: flex-start;
+    .attributeLogo {
+      position: absolute;
+      bottom: 0px;
+      left: 120px;
+      background-color: hsla(311, 26%, 44%, 0.4);
+      backdrop-filter: blur(5.8px);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 12px;
+    }
+  }
+  // Ajoutez ces nouvelles règles pour le menu du logo
+  .logoWrapper {
+    position: relative;
+  }
+
+  .logoMenu {
+    // @include primary-div-purple;
+    border: 2px solid var(--light-pink);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 1000;
+    padding: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: fit-content;
+  }
+  .connect {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    position: relative;
+    width: fit-content;
+    min-width: 150px;
+    gap: 12px;
+    padding: 12px 24px;
+    border-radius: 6px;
+    background-color: rgb(83, 49, 4, 0.5);
+    &:hover {
+      background-color: rgb(83, 49, 4);
+    }
+  }
+}
+
+.menu {
+  display: flex;
+  gap: 12px;
+  a {
+    padding: 12px 24px;
+    border-radius: 6px;
+    &.active {
+      background-color: rgb(83, 49, 4, 0.5);
+    }
+    &:hover {
+      background-color: rgb(83, 49, 4);
+    }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .header {
+    position: inherit;
+    background: none;
+    &::before {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .header {
+    .logo {
+      min-width: 47px;
+      width: 47px;
+      overflow: hidden;
+    }
+  }
+}
+
+@keyframes openMenu {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
